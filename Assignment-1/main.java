@@ -31,16 +31,20 @@ public class Main {
     public static void Task3(){
         System.out.println("Task 3: Conditional Statements and Loops (20 points).");
         printNewLine();
-        System.out.print("Loop from 1 to 20: ");
+        System.out.print("Print Even Numbers from 1 to 20: ");
         for(int i = 1; i <= 20; i++){
-            System.out.print(i + " ");
-        }
-        System.out.print("\nLoop odd number between 1 and 50: ");
-        for(int j = 1; j <=50; j++){
-            if(j % 2 == 1){
-                System.out.print(j + " ");
+            if (i % 2 == 0){
+                System.out.print(i + " ");
             }
         }
+        int sum = 0;
+        System.out.print("\nSum of odd numbers between 1 and 50: ");
+        for(int j = 1; j <=50; j++){
+            if(j % 2 == 1){
+                sum += j;
+            }
+        }
+        System.out.print(sum);
         System.out.print("\n");
         printNewLine();
     }
