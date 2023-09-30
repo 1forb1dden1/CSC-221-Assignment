@@ -20,12 +20,14 @@ public class StudentTerminal {
         printNewLine();
         System.out.println("1. Add New Student");
         System.out.println("2. Delete Student");
-        System.out.println("3. Get All Student Records");
-        System.out.println("4. Search for Student Record");
-        System.out.println("5. Edit Student Record");
-        System.out.println("6. Export to CSV");
-        System.out.println("7. Import from CSV");
-        System.out.println("8. Exit the program.");
+        System.out.println("3. Delete All Students");
+        System.out.println("4. Get All Student Records");
+        System.out.println("5. Search for Student Record");
+        System.out.println("6. Edit Student Record");
+        System.out.println("7. Auto sort all student Roll Numbers");
+        System.out.println("8. Export to CSV");
+        System.out.println("9. Import from CSV");
+        System.out.println("10. Exit the program.");
         System.out.print("Enter Your Choice: ");
     }
     
@@ -43,6 +45,7 @@ public class StudentTerminal {
                 throw new IllegalArgumentException("Number of grades must be greater than zero");
             }
             int[] marks = new int[numGrades];
+
             /*
             Random random = new Random();
             System.out.println(numGrades + " grades are generated for " + name + ".");
@@ -54,15 +57,39 @@ public class StudentTerminal {
             for (int i = 0; i < numGrades; i++) {
                 System.out.print("Enter the grade " + (i + 1) + ": ");
                 int current_grade = scanner.nextInt(); 
-                if(current_grade > 100 && current_grade < 0){
+                if (current_grade > 100 || current_grade < 0){
                     System.out.print("Enter a valid grade between 0 and 100: ");
                     current_grade = scanner.nextInt();
                 }
                 marks[i] = current_grade;
             }
-            
-            
-            Student newStudent = new Student(name, Student.getInstanceCount(), marks);
+            int rollNumber = 0;
+            while (true) {
+                try {
+                    System.out.print("Enter Roll number for the student: ");
+                    rollNumber = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
+                    
+                    boolean rollNumberExists = false;
+                    for (int i = 0; i < studentList.size(); i++) {
+                        if (rollNumber == studentList.get(i).getRollNumber()) {
+                            rollNumberExists = true;
+                            String exceptionString = "This Roll number already exists.\nUsed Roll Numbers: ";
+                            for (int j = 0; j < studentList.size(); j++) {
+                                exceptionString += (studentList.get(j).getRollNumber() + " ");
+                            }
+                            throw new IllegalArgumentException(exceptionString);
+                        }
+                    }
+                    if (!rollNumberExists) {
+                        // If input is valid, break out of the while loop.
+                        break;
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            Student newStudent = new Student(name, rollNumber, marks);
             studentList.add(newStudent);
             System.out.println("Student added successfully.");
             //user inputs non integer input, wrong typing.
@@ -74,7 +101,7 @@ public class StudentTerminal {
         }
     }
     
-    //Delete Student from the List.
+    //Delete a Student from the List.
     public static void deleteStudent(ArrayList<Student> studentList, Scanner scanner) {
         boolean deleted = false;
         Student deletedStudent = null;
@@ -96,22 +123,23 @@ public class StudentTerminal {
                 deleted = true;
             }
         }
-
-        //Sorts the list of student roll numbers in ascending order with an increment of 1.
-        for(int i = 0; i <= studentList.size()-1; i++){
-            studentList.get(i).setRollNumber(i+1);
-        }
         
         //Tell the user if the user has been deleted or not.
         if (deleted) {
-            System.out.println("The Student has been deleted and rollnumber's have been shifted.");
+            System.out.println("The Student has been deleted.");
             System.out.println("Here was the student's information:");
             deletedStudent.DisplayInfo();
         } else {
-            System.out.println("The student does not exist.");
+            System.out.println("Nothing was deleted; the student does not exist.");
         }
     }
     
+    //Delete all Students from the list.
+    public static void deleteAllStudent(ArrayList<Student> studentList){
+        studentList.clear();
+        System.out.println("All Student records have been terminated.");
+    }
+
     //Display all of the Student's information from the List. 
     public static void printAllStudentInfo(ArrayList<Student> studentList){
         for(int i = 0; i < studentList.size(); i++){
@@ -275,6 +303,16 @@ public class StudentTerminal {
           System.out.println("The student does not exist.");
         }
     }
+    
+    //Sorts all Roll number in ascending order.
+    public static void sortAllRollNumber(ArrayList<Student> studentList){
+        //Sorts the list of student roll numbers in ascending order with an increment of 1.
+        for(int i = 0; i <= studentList.size()-1; i++){
+            studentList.get(i).setRollNumber(i+1);
+        }
+    }
+    
+    //Export Student Records to CSV(Overrides previous data)
     public static void exportCSV(ArrayList<Student> studentList){
         
         //Initialize the data we will export to the CSV. 
@@ -309,6 +347,8 @@ public class StudentTerminal {
         }
         //System.out.println(dataToExport);
     }
+    
+    //Import Data from CSV to Student Records.
     public static void importCSV(ArrayList<Student> studentList, String filePath, Scanner scanner){
         try{
             File file = new File(filePath);
@@ -357,6 +397,7 @@ public class StudentTerminal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Student> studentList = new ArrayList<>();
+        //importCSV(studentList, "StudentRecords.txt", scanner);
 
         while(true){
             printMenu();
@@ -371,21 +412,27 @@ public class StudentTerminal {
                     deleteStudent(studentList, scanner);
                     break;
                 case 3: 
-                    printAllStudentInfo(studentList);
+                    deleteAllStudent(studentList);
                     break;
                 case 4: 
-                    printStudentInfo(studentList, scanner);
+                    printAllStudentInfo(studentList);
                     break;
                 case 5: 
-                    editStudentInfo(studentList, scanner);
+                    printStudentInfo(studentList, scanner);
                     break;
                 case 6: 
+                    editStudentInfo(studentList, scanner);
+                    break;
+                case 7:
+                    sortAllRollNumber(studentList);
+                    break;
+                case 8: 
                     exportCSV(studentList);
                     break;
-                case 7: 
+                case 9: 
                     importCSV(studentList, "StudentRecords.txt", scanner);
                     break;
-                case 8:
+                case 10:
                     System.out.println("Exiting the program.");
                     scanner.close();
                     System.exit(0);

@@ -4,15 +4,12 @@ public class Student {
     private String Name; 
     private int RollNumber;
     private int[] Marks;
-    private static int instanceCount = 1;
     
     // Constructor for initialization of the attributes
     public Student(String name, int rollnumber, int[] marks){
         this.Name = name; 
-        //this.RollNumber = rollnumber;
-        this.RollNumber = instanceCount; 
+        this.RollNumber = rollnumber;
         this.Marks = marks;
-        instanceCount +=1; 
     }
 
     // Method to caluclate the average marks of the student
@@ -69,9 +66,5 @@ public class Student {
 
     public void setMarks(int[] marks){
         this.Marks = marks; 
-    }
-
-    public static int getInstanceCount() {
-        return instanceCount;
     }
 }
