@@ -4,6 +4,8 @@ The Student Record Management System is a Java program that enables efficient ma
 
 **Warning**: Exporting will override existing data.
 
+**Start The Program**: This program will start up without automatically importing. To quickly start up, utilize function 8 from the main menu to import all student records from the CSV. 
+
 ## Main Menu
 
 The main menu in the driver class `StudentTerminal.java` offers several options for managing student records:
