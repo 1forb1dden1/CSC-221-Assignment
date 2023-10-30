@@ -18,15 +18,16 @@ public class Main {
     public static void Task2(){
         System.out.println("Task 2: Control Flow and Functions(15 points)");
         printNewLine();
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Your Age: ");
-        int Age = scan.nextInt();
+        int Age = scanner.nextInt();
         if(Age>= 18){
             System.out.println("You are an adult.");
         } else {
             System.out.println("You are a minor.");
         }
         printNewLine();
+        scanner.close();
     }
     public static void Task3(){
         System.out.println("Task 3: Conditional Statements and Loops (20 points).");
@@ -113,6 +114,7 @@ public class Main {
         }
         handleOperation(num1, num2, operation);
         printNewLine();
+        scanner.close();
     }
     public static void main(String[] args){
         Task1();
