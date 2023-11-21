@@ -1,3 +1,7 @@
+/*
+Purpose of Domain: Contains the core objects for the application
+*/
+
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

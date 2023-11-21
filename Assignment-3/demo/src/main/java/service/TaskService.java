@@ -1,3 +1,7 @@
+/*
+Purpose: Acts as a bridge between the controller and application
+ */
+
 package service;
 
 import domain.Task;

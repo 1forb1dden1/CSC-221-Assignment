@@ -1,3 +1,9 @@
+/*
+Purpose of Controller: Handle HTTP Requests to act as an interface between the application and client
+Achieves this by:
+- defining request mapping endpoints and handle incoming requests by the client
+*/
+
 package controller;
 
 import domain.Task;
@@ -25,7 +31,6 @@ public class TaskController {
         if (task != null) {
             return task;
         } else {
-            // Return a 404 Not Found response if the task is not found.
             throw new RuntimeException("Task not found with ID: " + taskId);
         }
     }
@@ -42,7 +47,6 @@ public class TaskController {
         if (updatedTask != null) {
             return updatedTask;
         } else {
-            // Return a 404 Not Found response if the task is not found.
             throw new RuntimeException("Task not found with ID: " + taskId);
         }
     }
